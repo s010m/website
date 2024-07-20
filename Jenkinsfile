@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'ubuntu:latest'
-            label 'docker'
+            args '-v /var/lib/jenkins/workspace/pipeline:/var/lib/jenkins/workspace/pipeline'
         }
     }
     environment {
@@ -16,8 +16,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'apt-get update'
-                sh 'apt-get install -y apache2'
+                sh 'apt-get update && apt-get install -y apache2'
                 sh 'cp -r * /var/www/html/'
             }
         }
