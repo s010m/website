@@ -1,5 +1,10 @@
 pipeline {
-    agent { label 'docker' }
+    agent {
+        docker {
+            image 'ubuntu:latest'
+            label 'docker'
+        }
+    }
     environment {
         GITHUB_REPO = 'https://github.com/s010m/website'
     }
