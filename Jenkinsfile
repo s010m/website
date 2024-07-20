@@ -2,14 +2,14 @@ pipeline {
     agent {
         docker {
             image 'ubuntu:latest'
-            args '-v /var/lib/jenkins/workspace/pipeline:/var/lib/jenkins/workspace/pipeline'
+            args '-u root:root'
         }
     }
     environment {
         GITHUB_REPO = 'https://github.com/s010m/website'
     }
     stages {
-        stage('Clone Repository') {
+        stage('Checkout SCM') {
             steps {
                 git url: GITHUB_REPO, branch: 'master'
             }
@@ -21,9 +21,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when {
-                branch 'master'
-            }
             steps {
                 sh 'systemctl restart apache2'
             }
